@@ -2,11 +2,11 @@
 
 require __DIR__ . '/vendor/autoload.php';
 
-use Mariadb\CatalogsPHP\Catalog;
+use Mariadb\CatalogsPHP\CatalogManager;
 
 class MariaDB_Catalog
 {
-    private static ?Catalog $api = null;
+    private static ?CatalogManager $api = null;
 
 	public function __construct() {
 		add_action( 'init', [ $this, 'hijack' ] );
@@ -27,7 +27,7 @@ class MariaDB_Catalog
 			$dbuser     = (defined( 'CATALOG_DB_USER' ) ? CATALOG_DB_USER : defined( 'DB_USER' ) ) ? DB_USER : '';
 			$dbpassword = (defined( 'CATALOG_DB_PASSWORD' ) ? CATALOG_DB_PASSWORD : defined( 'DB_PASSWORD' ) ) ? DB_PASSWORD : '';
 
-	        self::$api = new Catalog($dbhost, 3306, $dbuser, $dbpassword, null);
+	        self::$api = new CatalogManager($dbhost, 3306, $dbuser, $dbpassword, null);
 	    }
 
 		return self::$api;

@@ -12,12 +12,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/MariaDB/catalogs-php.git",
-                "reference": "2725a35e4163584930e3d8779526433f6c2298f5"
+                "reference": "c179b1d2ea27734b99dc041a58059f9de3c56ae5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MariaDB/catalogs-php/zipball/2725a35e4163584930e3d8779526433f6c2298f5",
-                "reference": "2725a35e4163584930e3d8779526433f6c2298f5",
+                "url": "https://api.github.com/repos/MariaDB/catalogs-php/zipball/c179b1d2ea27734b99dc041a58059f9de3c56ae5",
+                "reference": "c179b1d2ea27734b99dc041a58059f9de3c56ae5",
                 "shasum": ""
             },
             "require": {
@@ -45,7 +45,7 @@
                 "issues": "https://github.com/MariaDB/catalogs-php/issues",
                 "source": "https://github.com/MariaDB/catalogs-php/tree/main"
             },
-            "time": "2024-03-18T08:17:29+00:00"
+            "time": "2024-03-18T09:35:57+00:00"
         }
     ],
     "packages-dev": [
