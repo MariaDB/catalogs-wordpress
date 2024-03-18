@@ -1,0 +1,25 @@
+{
+  "name": "MariaDB/catalogs-wordpress",
+  "description": "WordPress site administration scripts for catalogs. Part of CloudFest Hackathon 2024",
+  "license": "GPL-2.0-or-later",
+  "require-dev": {
+    "dealerdirect/phpcodesniffer-composer-installer": "0.7.2",
+    "johnpbloch/wordpress-core": "^6.0",
+    "php-stubs/wordpress-stubs": "^6.0",
+    "phpcompatibility/phpcompatibility-wp": "2.1.4",
+    "vimeo/psalm": "^4.11"
+  },
+  "config": {
+    "sort-packages": true,
+    "allow-plugins": {
+      "dealerdirect/phpcodesniffer-composer-installer": true,
+      "composer/package-versions-deprecated": true
+    }
+  },
+  "scripts": {
+    "build": "git archive --format tgz --output catalogs.tgz HEAD",
+    "phpcs": "phpcs",
+    "phpcs:fix": "phpcbf",
+    "psalm": "psalm --no-cache --long-progress"
+  }
+}

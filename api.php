@@ -4,9 +4,10 @@ class MariaDB_Catalog_API
 {
     /**
      * The connection to the MariaDB server.
-     * @var \PDO
+     *
+     * @var PDO
      */
-    private $connection;
+    private PDO $connection;
 
     const MINIMAL_MARIA_VERSION = '11.0.2'; // This is too low, because this is a beta version we are devloping for.
 
@@ -14,20 +15,13 @@ class MariaDB_Catalog_API
      * 
      * @param string $server
      * @param int $serverPort
-     * @param string $dbUser
-     * @param string $dbPass
-     * @param array $options
+     * @param string $user
+     * @param string $password
      * @return void
      * @throws PDOException 
      * @throws Exception 
      */
-    public function __construct( protected $server = 'localhost', protected $serverPort = 3306, protected $dbUser = 'root', protected $dbPass = '') {
-        $this->server = $server;
-        $this->serverPort = $serverPort;
-        $this->user = $dbUser;
-        $this->password = $dbPass;
-
-        //$this->createAdminUserForCatalog('test11', 'yolo', 'yolo');
+    public function __construct( protected $server = 'localhost', protected $serverPort = 3306, protected $user = 'root', protected $password = '') {
     }
 
     public function get_new_config() {
@@ -45,7 +39,7 @@ class MariaDB_Catalog_API
         if (!$this->connection)
         {
             // Connect.
-            $this->connection = new \PDO("mysql:host=$this->server;port=$this->serverPort", $this->user, $this->password);
+            $this->connection = new PDO("mysql:host=$this->server;port=$this->serverPort", $this->user, $this->password);
 
             // Check the maria DB version.
             $version_query = $this->connection->query('SELECT VERSION()');
