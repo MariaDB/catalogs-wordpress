@@ -14,7 +14,7 @@ class MariaDB_Catalog
 	}
 
 	public function hijack() {
-		if ( str_contains( $_SERVER['REQUEST_URI'], 'wp-admin/setup-config.php' ) ) {
+		if ( defined( 'CATALOG_SIMPLE_SETUP' ) && CATALOG_SIMPLE_SETUP && str_contains( $_SERVER['REQUEST_URI'], 'wp-admin/setup-config.php' ) ) {
 			$path = wp_guess_url() . '/wp-content/mu-plugins/catalog/setup-config.php';
 			header( 'Location: ' . $path );
 			exit;
