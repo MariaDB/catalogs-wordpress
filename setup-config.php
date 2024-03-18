@@ -210,7 +210,7 @@ switch ( $step ) {
 		setup_config_display_header();
 
 		$autofocus = wp_is_mobile() ? '' : ' autofocus';
-		$config = MariaDB_Catalog::get_api()->get_new_config();
+		$config = MariaDB_Catalog::get_new_config();
 		?>
 <h1 class="screen-reader-text">
 		<?php

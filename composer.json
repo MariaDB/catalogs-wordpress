@@ -1,7 +1,10 @@
 {
-  "name": "MariaDB/catalogs-wordpress",
+  "name": "mariadb/catalogs-wordpress",
   "description": "WordPress site administration scripts for catalogs. Part of CloudFest Hackathon 2024",
   "license": "GPL-2.0-or-later",
+  "require": {
+    "mariadb/catalogs-php": "dev-main"
+  },
   "require-dev": {
     "dealerdirect/phpcodesniffer-composer-installer": "0.7.2",
     "johnpbloch/wordpress-core": "^6.0",
