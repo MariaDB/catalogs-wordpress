@@ -1,9 +1,6 @@
 <?php
 
 class MariaDB_DB extends wpdb {
-
-	private $switching_type = 'new_connectiond';
-
 	private $current_catalog = 'def';
 	private $def_connection = null;
 	private $catalog_connection = null;
@@ -33,8 +30,8 @@ class MariaDB_DB extends wpdb {
 
 		$this->dbh = mysqli_init();
 
-		if ($this->switching_type == 'new_connection') {
-			$this->def_connection = $this->dbh;
+		if ($this->get_connection_type() == 'double') {
+			$this->def_connection = &$this->dbh;
 		}
 
 		$host    = $this->dbhost;
@@ -111,7 +108,6 @@ class MariaDB_DB extends wpdb {
 
 			$this->ready = true;
 			$this->set_sql_mode();
-			//$this->select( $this->dbname, $this->dbh );
 
 			return true;
 		}
@@ -139,11 +135,14 @@ class MariaDB_DB extends wpdb {
 
 
 	public function query( $query ) {
+		var_dump($query);
 		if ($this->blogid > 1) {
 			$this->possible_switch_catalog(
 				$this->get_blog_id_by_table( $this->get_table_from_query($query) )
 			);	
 		}
+
+		parent::query('SELECT CATALOG()');
 
 		return parent::query($query);
 	}
@@ -164,9 +163,9 @@ class MariaDB_DB extends wpdb {
 		}
 
 		if ($this->current_catalog != $new_catalog) {
-			if ( $this->switching_type == 'new_connection' ) {
+			if ( $this->get_connection_type() == 'double' ) {
 				if ($new_catalog == 'def') {
-					$this->dbh = $this->def_connection;
+					$this->dbh = &$this->def_connection;
 				}
 				else {
 					if (is_null($this->catalog_connection)) {
@@ -183,11 +182,14 @@ class MariaDB_DB extends wpdb {
 
 						$this->catalog_connection = mysqli_init();
 						mysqli_real_connect( $this->catalog_connection, $host, $this->dbuser, $this->dbpassword, $new_catalog . '.' . $this->dbname, $port, $socket, $client_flags );
-						$this->dbh = $this->catalog_connection;
-						$this->db_connect();
+
+						$this->dbh = &$this->catalog_connection;
+						$this->init_charset();
+						$this->set_charset( $this->dbh );
+						$this->set_sql_mode();
 					}
 					else {
-						$this->dbh = $this->catalog_connection;
+						$this->dbh = &$this->catalog_connection;
 					}
 				}
 			}
@@ -195,10 +197,14 @@ class MariaDB_DB extends wpdb {
 				mysqli_query( $this->dbh, 'USE CATALOG ' . $new_catalog );
 
 				$this->select( $this->dbname, $this->dbh );
-
-				$this->current_catalog = $new_catalog;
 			}
+
+			$this->current_catalog = $new_catalog;
 		}
+	}
+
+	public function get_connection_type() {
+		return defined( 'CATALOG_CONNECTION_TYPE' ) ? CATALOG_CONNECTION_TYPE : 'single';
 	}
 
 	public function get_blog_id_by_table($table) {
