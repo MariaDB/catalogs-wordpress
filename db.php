@@ -116,24 +116,6 @@ class MariaDB_DB extends wpdb {
 	}
 
 
-	/**
-	 * Sets blog ID.
-	 *
-	 * @since 3.0.0
-	 *
-	 * @param int $blog_id
-	 * @param int $network_id Optional. Network ID. Default 0.
-	 * @return int Previous blog ID.
-	 */
-	public function set_blog_id( $blog_id, $network_id = 0 ) {
-		$old_blog_id = parent::set_blog_id( $blog_id, $network_id );
-
-		$this->possible_switch_catalog($blog_id);
-		
-		return $old_blog_id;
-	}
-
-
 	public function query( $query ) {
 		var_dump($query);
 		if ($this->blogid > 1) {
